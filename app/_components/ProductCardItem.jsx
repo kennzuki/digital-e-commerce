@@ -25,9 +25,9 @@ const ProductCardItem = ({product}) => {
           <p>{product.price}</p>
           <p>Product Quantity: 10</p>
         </CardContent>
-        <CardFooter className='flex justify-between mt-2'>
+        <CardFooter className='md:flex justify-between mt-2'>
           <p className="">{product.user.name}</p>
-          <Button>Add to Cart</Button>
+          <Button className='mt-2'>Add to Cart</Button>
         </CardFooter>
       </Card>
     </div>
