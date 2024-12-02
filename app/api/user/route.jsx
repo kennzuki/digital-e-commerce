@@ -12,7 +12,7 @@ export async function POST(req) {
             email: user?.primaryEmailAddress.emailAddress,
             image: user?.immageUrl
         }).returning(usersTable);
-        return NextResponse.json(result);
+        return NextResponse.json(result[0]);
     }
 
     return NextResponse.json(userData[0])
