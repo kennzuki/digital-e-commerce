@@ -29,8 +29,19 @@ const AddProduct = () => {
       <p className=''>Start adding product details to sell your items</p>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 py-8'>
               {/* left */}
-              <section className=''>
-                  <ImageUpload/>
+              <section className='flex flex-col gap-5'>
+                  <ImageUpload />
+                  <h4 className="">Upload file of product to sell</h4>
+                  <Input type="file" name='file' />
+                  
+                  <article className='mb-4'>
+                  <h4 className="font-bold">Message to user</h4>
+            <Textarea
+              name='description'
+              placeholder='write thank you msg to user'
+            />
+          </article>
+
               </section>
               {/* right */}
         <section className='[&_h4]:font-medium [&_h4]:text-xl'>
