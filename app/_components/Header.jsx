@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { UserButton } from '@clerk/nextjs';
 import { Store } from 'lucide-react';
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -15,10 +16,13 @@ const Header = () => {
       </ul>
       <section className='flex gap-6 place-items-center'>
         <Store size={30} />
+        
+        <Link href={'/dashboard'}>
         <Button className='bg-red-500 hover:scale-125 duration-75 ease-in-out shadow-xl shadow-black'>
           start selling
         </Button>
-        <UserButton className='h-[65px]' />
+        </Link>
+        <UserButton  />
       </section>
     </nav>
   );
