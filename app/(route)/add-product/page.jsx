@@ -11,6 +11,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ImageUpload from './_components/ImageUpload';
+import axios from "axios";
 
 const AddProduct = () => {
   const categoryOptions = [
@@ -30,9 +31,18 @@ const AddProduct = () => {
       console.log(formData);
       
     };
-    const onAddProductBtn = () => { 
+    const onAddProductBtn =async () => { 
         console.log(formData);
+        const formDataObj = new FormData() 
+        formDataObj.append('image',formData.image)
+        formDataObj.append('file',formData.file)
+        formDataObj.append('data', JSON.stringify(formData))
         
+        const result = await axios.post('/api/products', formDataObj, {
+            headers: {
+              'Content-Type':'multipart/form-data'//passing json and file
+            }
+        })
     }
 
   return (
