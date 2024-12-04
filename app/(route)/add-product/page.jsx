@@ -13,6 +13,8 @@ import { Button } from '@/components/ui/button';
 import ImageUpload from './_components/ImageUpload';
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import { Loader2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const AddProduct = () => {
   const categoryOptions = [
@@ -27,7 +29,9 @@ const AddProduct = () => {
     'Others',
   ];
   const [formData, setFormData] = useState([]);
-  const {user}=useUser()
+  const { user } = useUser()
+  const [loading, setLoading] = useState(false);
+  const router=useRouter()
   useEffect(() => {
     setFormData({
       userEmail:user?.primaryEmailAddress?.emailAddress
@@ -38,9 +42,10 @@ const AddProduct = () => {
   const handleChange = (fieldName, fieldValue) => {
       setFormData((prev) => ({ ...prev, [fieldName]: fieldValue }));
       console.log(formData);
-      
+      toast('New product added successfully')
     };
-    const onAddProductBtn =async () => { 
+  const onAddProductBtn = async () => { 
+      setLoading(true);
         console.log(formData);
         const formDataObj = new FormData() 
         formDataObj.append('image',formData.image)
@@ -52,6 +57,12 @@ const AddProduct = () => {
               'Content-Type':'multipart/form-data'//passing json and file
             }
         })
+    setLoading(true);
+    if (result) { 
+      router.push('/dashboard')
+      toast('New product added successfully')
+    }
+
     }
 
   return (
@@ -129,7 +140,7 @@ const AddProduct = () => {
               onChange={(e) => handleChange(e.target.name, e.target.value)}
             />
           </article>
-          <Button onClick={onAddProductBtn} className='w-full'>Add Product</Button>
+          <Button onClick={onAddProductBtn} className='w-full' disabled={loading}>{loading? <Loader2Icon className="animate-spin"/>: 'Add Product'}</Button>
         </section>
       </div>
     </div>
