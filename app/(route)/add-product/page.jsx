@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ImageUpload from './_components/ImageUpload';
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 const AddProduct = () => {
   const categoryOptions = [
@@ -26,6 +27,14 @@ const AddProduct = () => {
     'Others',
   ];
   const [formData, setFormData] = useState([]);
+  const {user}=useUser()
+  useEffect(() => {
+    setFormData({
+      userEmail:user?.primaryEmailAddress?.emailAddress
+    })
+  },
+    [user]
+  )
   const handleChange = (fieldName, fieldValue) => {
       setFormData((prev) => ({ ...prev, [fieldName]: fieldValue }));
       console.log(formData);

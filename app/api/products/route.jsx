@@ -1,6 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { NextResponse } from 'next/server';
 import { storage } from '@/configs/firebaseConfig';
+import { productsTable } from "@/configs/schema";
 export async function POST(req) {
   //get formData
   const formData = await req.formData();
@@ -26,7 +27,18 @@ export async function POST(req) {
     });
     const fileUrl = await getDownloadURL(storageFileRef); //get image url to put to database
   console.log(fileUrl);
-  //save formData along with URL into database
+    //save formData along with URL into database
+    const result = await db.insert(productsTable).values({
+        title: data?.title,
+        category: data?.category,
+        description: data?.description,
+        price: data?.price,
+        imageUrl: imageUrl,
+        fileUrl: fileUrl,
+        about: data?.about,
+        message:data?.message,
+        createdAt: data?.userEmail
+    }).returning(productsTable)
 
-  return NextResponse.json({});
+  return NextResponse.json(result);
 }
