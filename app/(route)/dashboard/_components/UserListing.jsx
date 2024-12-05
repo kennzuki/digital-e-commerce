@@ -5,7 +5,16 @@ import Link from "next/link";
 import { useState } from "react";
 
 const UserListing = () => {
-  const [listing,setListing] =useState([])
+  const [listing, setListing] = useState([])
+  const user = useUser()
+  useEffect(() => {
+    user&&GetUserProductList();
+  }, [user]);
+  const GetUserProductList = async () => {
+    const result = await axios.get('/api/products?email=' + user?.primaryEmailAddress)
+    console.log(result.data);
+    
+  }
 
   return (
     <div>
